@@ -16,8 +16,9 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'Free QR Code Generator',
-  description: 'Create custom QR Codes with images custoom desings and patterns for your business for free by studybetterai team',
+  title: 'Free QR Code Generator by Outside Solutions',
+  description: 'Create custom QR codes with images, custom designs and patterns for your business, for free. An Outside Solutions product, built by the studybetterai team.',
+  authors: [{ name: 'Outside Solutions' }],
   generator: 'Free QR Code Generator',
 }
 

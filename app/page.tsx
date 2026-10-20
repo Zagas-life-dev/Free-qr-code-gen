@@ -24,6 +24,8 @@ import {
   QR_SHAPES,
   UP,
   exportQR,
+  qrFileName,
+  BRAND,
   isHex,
   scanWarnings,
   shapePath,
@@ -196,7 +198,7 @@ export default function QRCodeGeneratorPage() {
       })
       const href = URL.createObjectURL(blob)
       const link = document.createElement("a")
-      link.download = format === "svg" ? "qr-code.svg" : `qr-code-${downloadSize}.${format}`
+      link.download = qrFileName(url, format)
       link.href = href
       link.click()
       setTimeout(() => URL.revokeObjectURL(href), 1000)
@@ -209,7 +211,13 @@ export default function QRCodeGeneratorPage() {
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero */}
       <header className="bg-up-navy text-up-cream">
-        <div className="mx-auto max-w-6xl px-4 sm:px-10 pt-14 pb-16 sm:pt-24 sm:pb-24">
+        <nav className="mx-auto max-w-6xl px-4 sm:px-10 pt-6 flex flex-wrap items-center justify-between gap-3">
+          <span className="font-display font-bold text-[16px]">Free QR Code Generator</span>
+          <span className="rounded-full px-3 py-1.5 text-[13px] font-semibold border" style={{ borderColor: "rgba(255,255,255,0.12)", color: "rgba(251,250,247,0.65)" }}>
+            by <span className="text-up-cream">{BRAND}</span>
+          </span>
+        </nav>
+        <div className="mx-auto max-w-6xl px-4 sm:px-10 pt-10 pb-16 sm:pt-16 sm:pb-24">
           <Eyebrow className="text-up-orange mb-4">Free · No sign-up · No watermark</Eyebrow>
           <h1 className="font-display font-bold text-[32px] leading-[1.15] sm:text-[54px] sm:leading-[1.1] max-w-3xl">
             QR codes people actually want to scan.
@@ -504,8 +512,13 @@ export default function QRCodeGeneratorPage() {
       </main>
 
       <footer className="bg-up-navy">
-        <div className="mx-auto max-w-6xl px-4 sm:px-10 py-8 text-[13px]" style={{ color: "rgba(251,250,247,0.4)" }}>
-          Free QR Code Generator · Codes never expire and are made in your browser.
+        <div className="mx-auto max-w-6xl px-4 sm:px-10 py-8 flex flex-wrap items-center justify-between gap-3 text-[13px]">
+          <p className="font-semibold text-up-cream">
+            An <span className="text-up-orange">{BRAND}</span> product
+          </p>
+          <p style={{ color: "rgba(251,250,247,0.4)" }}>
+            Free QR Code Generator · Codes never expire and are made in your browser. © {new Date().getFullYear()} {BRAND}
+          </p>
         </div>
       </footer>
     </div>

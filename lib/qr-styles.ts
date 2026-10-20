@@ -638,6 +638,7 @@ export async function renderStyledQRSvg(opts: RenderQROptions): Promise<string> 
 
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" width="${scene.width}" height="${scene.height}" viewBox="0 0 ${scene.width} ${scene.height}">` +
+    `<title>QR code by ${BRAND}</title>` +
     style +
     (defs.length ? `<defs>${defs.join("")}</defs>` : "") +
     body.join("") +
@@ -678,4 +679,34 @@ export async function exportQR(format: ExportFormat, opts: RenderQROptions): Pro
   return new Promise((resolve, reject) =>
     source.toBlob((b) => (b ? resolve(b) : reject(new Error(`This browser can't export ${format.toUpperCase()}`))), type, 0.92),
   )
+}
+
+export const BRAND = "Outside Solutions"
+
+// "https://www.example.com/page" -> "example.com-qr-code-by-outside-solutions.png".
+// Plain text uses its first few words instead of a site name.
+export function qrFileName(value: string, format: ExportFormat) {
+  const suffix = `qr-code-by-${BRAND.toLowerCase().replace(/\s+/g, "-")}.${format}`
+  const text = value.trim()
+  let name = ""
+  // Wi-Fi, mailto, tel, sms… name the file by type only, so passwords, emails and numbers stay out of it
+  const scheme = text.match(/^([a-z][a-z\d+.-]*):/i)?.[1].toLowerCase()
+  if (scheme && scheme !== "http" && scheme !== "https") return `${scheme.replace(/[^a-z0-9]/g, "")}-${suffix}`
+  try {
+    const url = new URL(/^[a-z][a-z\d+.-]*:/i.test(text) ? text : `https://${text}`)
+    if (url.hostname.includes(".")) name = url.hostname.replace(/^www\d*\./i, "")
+  } catch {
+    // not a URL; fall through to the text slug
+  }
+  if (!name) {
+    name = text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40)
+      .replace(/-+$/, "")
+  }
+  // Keep only characters every OS accepts in file names
+  name = name.replace(/[^a-z0-9.-]/gi, "-").toLowerCase()
+  return name ? `${name}-${suffix}` : suffix
 }
