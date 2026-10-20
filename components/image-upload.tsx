@@ -78,7 +78,7 @@ export function ImageUpload({ onImageUpload, className }: ImageUploadProps) {
               <img
                 src={uploadedImage || "/placeholder.svg"}
                 alt="Uploaded logo"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             </div>
             <div className="flex-1">

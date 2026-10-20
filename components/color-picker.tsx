@@ -12,19 +12,20 @@ interface ColorPickerProps {
   className?: string
 }
 
+// UP palette first, then a few neutrals and extras
 const presetColors = [
+  "#0B1233",
+  "#FBFAF7",
+  "#FF6A00",
+  "#B8551E",
+  "#FF4D6D",
+  "#D6FF3F",
   "#000000",
-  "#ffffff",
-  "#ef4444",
-  "#f97316",
-  "#eab308",
-  "#22c55e",
-  "#06b6d4",
-  "#3b82f6",
-  "#8b5cf6",
-  "#ec4899",
-  "#6b7280",
-  "#059669",
+  "#FFFFFF",
+  "#5B5847",
+  "#1E3A8A",
+  "#047857",
+  "#7C3AED",
 ]
 
 export function ColorPicker({ color, onChange, className }: ColorPickerProps) {
